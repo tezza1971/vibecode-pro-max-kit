@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 /**
  * PostToolUse hook: Tracks file modifications and reminds to run code-simplifier
+ * @version 1.0.1
  *
  * This hook fires after Edit/Write/MultiEdit operations and:
  * 1. Tracks modified files in the session
