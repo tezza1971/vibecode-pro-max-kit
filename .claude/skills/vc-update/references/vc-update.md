@@ -16,6 +16,7 @@ The manifest uses glob-based patterns resolved by `resolve-manifest.mjs`.
     ".claude/hooks/**",
     ".claude/settings.json",
     ".codex/**",
+    ".cursor/**",
     "CLAUDE.md",
     "AGENTS.md",
     "process/development-protocols/**",
@@ -23,7 +24,8 @@ The manifest uses glob-based patterns resolved by `resolve-manifest.mjs`.
     "process/_seeds/**",
     "process/_seeds/**/.gitkeep",
     "process/_seeds/**/.gitignore",
-    "process/_seeds/**/.env.example"
+    "process/_seeds/**/.env.example",
+    "docs/CURSOR.md"
   ],
   "exclude": [
     "process/context/all-context.md",
@@ -37,7 +39,10 @@ The manifest uses glob-based patterns resolved by `resolve-manifest.mjs`.
   "strip": ["CLAUDE.md", "AGENTS.md"],
   "merge": [".claude/settings.json"],
   "copyIfMissing": ["process/context/planning/example-*.md"],
-  "symlinks": { ".agents/skills": "../.claude/skills" },
+  "symlinks": {
+    ".agents/skills": "../.claude/skills",
+    ".cursor/skills": "../.claude/skills"
+  },
   "kitOnly": [
     "README.md", "README-preview*.html", "CONTRIBUTING.md", "SECURITY.md",
     "TRADEMARK.md", "LICENSE", "docs/**", "assets/**", ".github/**",

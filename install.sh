@@ -3,7 +3,7 @@ set -euo pipefail
 
 # vibecode-pro-max-kit installer
 # Clean install with backup for both new and existing projects.
-# Replaces .claude/, .codex/, .agents/, CLAUDE.md, AGENTS.md with kit versions.
+# Replaces .claude/, .codex/, .cursor/, .agents/, CLAUDE.md, AGENTS.md with kit versions.
 # Preserves: process/ (user content), .claude/settings.json (user config).
 # After this script, run Claude Code and say "Run vc-setup" to
 # auto-detect your project, scaffold process/, and populate context.
@@ -73,7 +73,7 @@ SYMLINKS_JSON=$(echo "$MANIFEST_JSON" | node -e "
 # Backup existing setup (if any)
 # ══════════════════════════════════════════════════════
 HAS_EXISTING=false
-if [ -d ".claude" ] || [ -d ".codex" ] || [ -d ".agents" ] || [ -f "CLAUDE.md" ] || [ -f "AGENTS.md" ]; then
+if [ -d ".claude" ] || [ -d ".codex" ] || [ -d ".cursor" ] || [ -d ".agents" ] || [ -f "CLAUDE.md" ] || [ -f "AGENTS.md" ]; then
   HAS_EXISTING=true
   echo -e "  ${YELLOW}Existing setup detected.${NC} Backing up..."
   mkdir -p "$BACKUP_DIR"
@@ -81,6 +81,7 @@ if [ -d ".claude" ] || [ -d ".codex" ] || [ -d ".agents" ] || [ -f "CLAUDE.md" ]
   # Back up directories
   [ -d ".claude" ] && cp -R .claude "$BACKUP_DIR/.claude" && echo -e "    ${YELLOW}Backed up${NC} .claude/"
   [ -d ".codex" ] && cp -R .codex "$BACKUP_DIR/.codex" && echo -e "    ${YELLOW}Backed up${NC} .codex/"
+  [ -d ".cursor" ] && cp -R .cursor "$BACKUP_DIR/.cursor" && echo -e "    ${YELLOW}Backed up${NC} .cursor/"
   [ -d ".agents" ] && cp -R .agents "$BACKUP_DIR/.agents" && echo -e "    ${YELLOW}Backed up${NC} .agents/"
 
   # Back up root protocol files
@@ -92,7 +93,7 @@ if [ -d ".claude" ] || [ -d ".codex" ] || [ -d ".agents" ] || [ -f "CLAUDE.md" ]
   echo ""
 
   # Clean slate — remove old agent tooling dirs
-  rm -rf .claude .codex .agents
+  rm -rf .claude .codex .cursor .agents
 fi
 
 # ══════════════════════════════════════════════════════
@@ -167,7 +168,8 @@ HOOK_COUNT=$(ls .claude/hooks/*.cjs 2>/dev/null | wc -l | tr -d ' ')
 echo ""
 echo -e "  ${GREEN}Install complete.${NC} (v$VERSION)"
 echo ""
-echo -e "    ${CYAN}Agents${NC}:     $AGENT_COUNT (Claude Code + Codex)"
+CURSOR_AGENT_COUNT=$(ls .cursor/agents/*.md 2>/dev/null | wc -l | tr -d ' ')
+echo -e "    ${CYAN}Agents${NC}:     $AGENT_COUNT (Claude + Codex + Cursor: $CURSOR_AGENT_COUNT)"
 echo -e "    ${CYAN}Skills${NC}:     $SKILL_COUNT"
 echo -e "    ${CYAN}Hooks${NC}:      $HOOK_COUNT"
 echo -e "    ${CYAN}Files${NC}:      $INSTALLED_COUNT installed"
@@ -186,8 +188,9 @@ fi
 
 echo ""
 echo "  Next:"
-echo "    1. Run: claude"
-echo '    2. Say: "Run vc-setup"'
+echo "    Claude Code: run \`claude\`, then say \"Run vc-setup\""
+echo "    Cursor IDE/CLI: open this repo (or run \`agent\` from root), then say \"Run vc-setup\""
+echo "    See docs/CURSOR.md for Cursor-specific setup."
 echo ""
 echo "  vc-setup will auto-detect your project, scaffold the process/"
 echo "  directory, deep-scan your codebase, and populate context with"

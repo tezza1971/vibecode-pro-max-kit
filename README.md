@@ -93,11 +93,13 @@
 curl -fsSL https://raw.githubusercontent.com/withkynam/vibecode-pro-max-kit/main/install.sh | bash
 ```
 
-Then open Claude Code and say:
+Then open **Claude Code** or **Cursor** and say:
 
 ```
 Run vc-setup
 ```
+
+For Cursor-specific setup (CLI, Plan mode, hooks), see [docs/CURSOR.md](docs/CURSOR.md).
 
 That's it. The setup skill detects your stack, asks about your project (a real conversation, not a checklist), scaffolds the process directory, deep-scans your codebase, and populates context files with actual content — not placeholders.
 
@@ -126,8 +128,15 @@ your-project/
 │       └── ...
 ├── .codex/
 │   └── agents/              # 🔄 Mirrored agents for Codex
+├── .cursor/
+│   ├── agents/              # 🔄 Mirrored agents for Cursor
+│   ├── rules/               # 📏 Cursor rule shards
+│   ├── hooks.json           # 🪝 Cursor hooks (CLI + IDE)
+│   └── skills -> ../.claude/skills
+├── .agents/
+│   └── skills -> ../.claude/skills   # 🔗 Codex skill discovery
 ├── CLAUDE.md                # 📋 Orchestrator + routing rules
-├── AGENTS.md                # 📖 Agent registry
+├── AGENTS.md                # 📖 Agent registry (Codex + Cursor)
 └── process/                 # 🧠 Created by vc-setup (not install)
     └── ...
 ```
@@ -607,7 +616,7 @@ When the agent is about to cross a phase boundary, it stops itself: <em>"PHASE J
 <td width="50%" valign="top">
 <h1>🔄</h1>
 <strong>Works Across 7 AI Coding Tools</strong><br><br>
-Two open standards — <code>AGENTS.md</code> and <code>SKILL.md</code> — mean <strong>zero adapters, zero plugins, zero configuration.</strong> Start in Claude Code, switch to Cursor, continue in Codex.
+First-class harness surfaces for Claude Code, Codex, and Cursor (<code>.cursor/rules</code>, agents, hooks). Other tools use open standards — <code>AGENTS.md</code> and <code>SKILL.md</code>. Start in Claude Code, switch to Cursor, continue in Codex.
 </td>
 </tr>
 </table>
@@ -1113,10 +1122,15 @@ your-project/
 │   └── hooks/               # 🪝 7 lifecycle hooks (.cjs)
 ├── .codex/
 │   └── agents/              # 🔄 Mirrored for Codex compatibility
+├── .cursor/
+│   ├── agents/              # 🔄 Mirrored for Cursor (IDE + CLI)
+│   ├── rules/               # 📏 Cursor rule shards (.mdc)
+│   ├── hooks.json           # 🪝 Cursor hooks (adapts .claude/hooks/)
+│   └── skills -> ../.claude/skills
 ├── .agents/
 │   └── skills -> ../.claude/skills   # 🔗 Symlink for Codex discovery
 ├── CLAUDE.md                # 📋 Orchestrator config + routing rules
-├── AGENTS.md                # 📖 Agent + skill registry
+├── AGENTS.md                # 📖 Agent + skill registry (Codex + Cursor)
 └── process/
     ├── context/             # 🧠 Auto-routed knowledge domains
     ├── general-plans/       # 📋 Cross-cutting plans + reports
@@ -1146,6 +1160,7 @@ We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
 
 **Quick links:**
 
+- 📘 [Cursor setup (IDE + CLI)](docs/CURSOR.md)
 - 🐛 [Report a bug](https://github.com/withkynam/vibecode-pro-max-kit/issues/new?template=1.bug_report.yml)
 - 💡 [Request a feature](https://github.com/withkynam/vibecode-pro-max-kit/issues/new?template=2.feature_request.yml)
 - ⚡ [Submit a skill](https://github.com/withkynam/vibecode-pro-max-kit/issues/new?template=3.skill_submission.yml)

@@ -1,0 +1,37 @@
+---
+description: RIPER-5 orchestrator routing, mode prefixes, and phase transitions for Cursor Agent
+alwaysApply: true
+---
+
+# RIPER-5 Orchestrator (Cursor)
+
+You operate as the **orchestrator**, not the default worker. Route mode-specific work to subagents in `.cursor/agents/` via the Task tool when appropriate.
+
+## Mode prefix
+
+Every response in an explicit RIPER-5 workflow MUST begin with `[MODE: MODE_NAME]`.
+
+## Routing (summary)
+
+| Intent | Route to |
+|--------|----------|
+| Feature request | `vc-research-agent` → INNOVATE → PLAN → EXECUTE |
+| Non-trivial question | `vc-research-agent` |
+| Trivial fix (<15 lines, single file) | `vc-execute-agent` directly |
+| Bug/debug | `vc-debugger` |
+| UI/frontend | `vc-research-agent` + `vc-ui-ux-designer` at EXECUTE |
+| Existing active plan | Resume from plan file — do not recreate |
+
+## Phase gates
+
+- **EXECUTE** requires explicit user approval: `ENTER EXECUTE MODE` and a selected plan file path.
+- Never skip RESEARCH → INNOVATE → PLAN for substantial work.
+- After non-trivial EXECUTE, surface UPDATE PROCESS closeout (plan path, verified vs unverified, next step).
+
+## Skills
+
+Scan `.claude/skills/` (also `.agents/skills/`, `.cursor/skills/`) and attach relevant skills before routing.
+
+## Full protocol
+
+Read [AGENTS.md](../../AGENTS.md) and [process/development-protocols/all-development-protocols.md](../../process/development-protocols/all-development-protocols.md) before substantial work.

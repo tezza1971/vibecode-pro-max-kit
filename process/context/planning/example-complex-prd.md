@@ -2240,6 +2240,13 @@ See [API Surface](#11-api-surface-trpc) section above for full contracts.
 
 ---
 
+## Cursor Plan import block
+
+Import one phase/RFC checklist at a time into Cursor Plan mode:
+
+1. [ ] Phase 1 / RFC-001 — (example placeholder)
+2. [ ] Verification gate — run tests and user confirmation before next phase
+
 ## Cursor + RIPER-5 Guidance
 
 ### Cursor Plan Mode

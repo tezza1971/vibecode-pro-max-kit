@@ -354,6 +354,14 @@ After completing all implementation steps, verify the following:
 - **Mock Data:** Keep all data in `lib/mockData.ts`, import where needed
 - **TypeScript:** Maintain strict typing throughout, use interfaces from mockData
 
+## Cursor Plan import block
+
+Copy this checklist into Cursor Plan mode (`/plan` or `agent --mode=plan`):
+
+1. [ ] Step 1 — (example placeholder)
+2. [ ] Step 2 — (example placeholder)
+3. [ ] Run Post-Implementation Testing after all steps
+
 ## Cursor + RIPER-5 Guidance
 
 **Cursor Plan Mode:**

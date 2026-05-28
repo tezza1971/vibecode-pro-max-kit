@@ -230,8 +230,11 @@ After each phase, document:
 16. Verification Evidence
 17. Resume and Execution Handoff
 18. Cursor + RIPER-5 Guidance
+19. **Cursor Plan import block** (required fenced section — copy-paste checklist for Cursor Plan mode)
 
-- Use Cursor Plan mode: import this checklist
+Include a section exactly titled `## Cursor Plan import block` containing numbered checklist steps only (no prose), suitable for pasting into Cursor Plan mode (`/plan`, `--mode=plan`).
+
+- Use Cursor Plan mode: import the **Cursor Plan import block** section
 - RIPER-5: RESEARCH → INNOVATE → PLAN, then request EXECUTE
 - Avoid code until EXECUTE; if scope expands mid-flight, pause and convert to COMPLEX
 - **After each phase: STOP and verify before proceeding**

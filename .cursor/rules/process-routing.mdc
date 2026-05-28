@@ -1,0 +1,18 @@
+---
+description: Context routing discipline — read all-*.md routers before deeper docs
+alwaysApply: true
+---
+
+# Process context routing
+
+`all-*.md` files under `process/` are **routers**, not full knowledge.
+
+Before proposing operational steps:
+
+1. Read [process/context/all-context.md](../../process/context/all-context.md) (or the project copy after `vc-setup`).
+2. Follow its routing table to the relevant deeper doc(s).
+3. For tests, start at [process/context/tests/all-tests.md](../../process/context/tests/all-tests.md).
+
+Do not read only the router and skip deeper docs — that produces stale or incomplete procedures.
+
+When editing harness or protocol files, run `vc-audit-vc` / `vc-audit-context` after structural changes.

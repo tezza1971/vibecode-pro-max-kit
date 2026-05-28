@@ -93,6 +93,9 @@ function validatePlan(relPath) {
   if (!/ENTER EXECUTE MODE|RIPER-5|Cursor Plan|Next Step/i.test(text)) {
     warn(`${relPath} does not end with a clear next instruction for execution`);
   }
+  if (!/##\s+Cursor Plan import block/i.test(text)) {
+    warn(`${relPath} missing Cursor Plan import block section`);
+  }
 
   const directPlan = isDirectPlanArtifact(name);
   const legacyPlan = isLegacyPlanShape(name);

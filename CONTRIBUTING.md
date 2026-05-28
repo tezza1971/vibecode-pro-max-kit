@@ -9,7 +9,7 @@
 
 # Contributing to vibecode-pro-max-kit
 
-Thank you for your interest in contributing to vibecode-pro-max-kit! This project provides a ready-to-use agent harness for Claude Code and Codex, and we welcome contributions from everyone.
+Thank you for your interest in contributing to vibecode-pro-max-kit! This project provides a ready-to-use agent harness for Claude Code, Codex, and Cursor, and we welcome contributions from everyone.
 
 By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md).
 
@@ -55,13 +55,14 @@ Skills are reusable capability modules that live under `.claude/skills/`. Each s
 
 Agent definitions provide specialized personas for different workflow phases. Each agent must:
 
-- Have both a `.claude/agents/` version (for Claude Code) and a `.codex/agents/` version (for Codex)
-- Maintain parity between the two versions
+- Have a `.claude/agents/` version (canonical), a `.codex/agents/` version (Codex), and a `.cursor/agents/` version (Cursor)
+- Maintain parity across all three surfaces
+- Regenerate Cursor agents after Claude body changes: `node .claude/skills/vc-audit-vc/scripts/generate-cursor-agents.mjs --write`
 - Follow the existing naming conventions
 
 ### Hooks
 
-Pre- and post-execution hooks that live under `.claude/hooks/`. These run automatically at specific lifecycle points in Claude Code sessions.
+Pre- and post-execution hooks live under `.claude/hooks/` (canonical). Cursor adapters in `.cursor/hooks/adapters/` wrap shared hook logic for `.cursor/hooks.json`. Codex duplicates hooks under `.codex/hooks/`. Update all surfaces when hook behavior changes.
 
 ### Protocols
 

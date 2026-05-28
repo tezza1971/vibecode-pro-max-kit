@@ -26,6 +26,18 @@ jobs:
       - name: Validate agent parity
         run: node .claude/skills/vc-audit-vc/scripts/validate-agent-parity.mjs
 
+      - name: Validate Cursor surface
+        run: node .claude/skills/vc-audit-vc/scripts/validate-cursor-surface.mjs
+
+      - name: Validate Cursor agent parity
+        run: node .claude/skills/vc-audit-vc/scripts/validate-cursor-agent-parity.mjs
+
+      - name: Validate Cursor hooks
+        run: node .claude/skills/vc-audit-vc/scripts/validate-cursor-hooks.mjs
+
+      - name: Validate Cursor rules
+        run: node .claude/skills/vc-audit-vc/scripts/validate-cursor-rules.mjs
+
       - name: Validate skills
         run: node .claude/skills/vc-audit-vc/scripts/validate-skills.mjs
 

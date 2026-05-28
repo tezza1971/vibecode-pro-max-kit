@@ -227,6 +227,10 @@ Check for:
 - `.github/` directory (CI/CD)
 - `README.md` content (project description)
 - `.vibecode-backup/` (indicates install.sh just ran over an existing setup)
+- `.cursor/` directory (Cursor harness — rules, agents, hooks)
+- Cursor CLI on PATH: `command -v agent` or `command -v cursor-agent` (optional signal)
+
+Ask the user which primary IDE they use (Claude Code / Codex / Cursor / mixed) when not obvious from context.
 
 ### Detection Summary Format
 
@@ -639,13 +643,28 @@ ls .codex/agents/*.toml | sed 's|.codex/agents/||;s|\.toml$||' | sort > /tmp/cod
 diff /tmp/claude-agents.txt /tmp/codex-agents.txt
 ```
 
+### Cursor Agent Parity Check
+
+Verify Cursor agents match Claude canonical names:
+
+```bash
+ls .cursor/agents/*.md | sed 's|.cursor/agents/||;s|\.md$||' | sort > /tmp/cursor-agents.txt
+diff /tmp/claude-agents.txt /tmp/cursor-agents.txt
+node .claude/skills/vc-audit-vc/scripts/validate-cursor-agent-parity.mjs
+node .claude/skills/vc-audit-vc/scripts/validate-cursor-hooks.mjs
+node .claude/skills/vc-audit-vc/scripts/validate-cursor-rules.mjs
+node .claude/skills/vc-audit-vc/scripts/validate-cursor-surface.mjs
+```
+
 ### Skill Discovery Check
 
-Verify the symlink resolves:
+Verify the symlinks resolve:
 
 ```bash
 ls -la .agents/skills
 ls .agents/skills/vc-setup/SKILL.md
+ls -la .cursor/skills
+ls .cursor/skills/vc-setup/SKILL.md
 ```
 
 ### Post-Setup Summary
@@ -668,5 +687,13 @@ Recommended next steps:
 1. Review process/context/all-context.md and refine any sections that need more detail
 2. Review detected context groups and feature folders -- add or remove as needed
 3. Run the vc-audit-context skill to validate context discovery wiring
-4. Start using the harness: describe a feature request to trigger the RIPER-5 workflow
+4. Run `vc-audit-vc` (includes Cursor validators) after harness edits
+5. Start using the harness: describe a feature request to trigger the RIPER-5 workflow
+
+Cursor quick start (if using Cursor IDE or CLI):
+- Open this repo in Cursor or run `agent` from the project root
+- Confirm `.cursor/rules/`, `.cursor/hooks.json`, and skills appear in Settings
+- Try: "add [feature]" → should route RESEARCH; say "ENTER EXECUTE MODE" after plan approval
+- For Cursor Plan mode: import the **Cursor Plan import block** from `process/general-plans/active/*_PLAN_*.md`
+- See docs/CURSOR.md for CLI permissions and troubleshooting
 ```

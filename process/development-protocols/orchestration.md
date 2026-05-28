@@ -9,6 +9,12 @@ When spawning subagents, always include:
 3. Plans path: `{work_context}/process/general-plans/active/`
 4. Feature: optional, but required when the work belongs to a feature-scoped folder
 
+### Cursor subagent invocation
+
+In Cursor (IDE or CLI), delegate RIPER-5 phase work via the **Task** tool using prompts from `.cursor/agents/vc-*-agent.md`. Cursor does not enforce Claude YAML `tools:` allowlists — subagent prompts and `.cursor/hooks.json` provide the safety boundary.
+
+See [cursor-integration.md](cursor-integration.md) for Plan mode vs RIPER PLAN distinctions.
+
 Feature override paths:
 
 - Reports: `{work_context}/process/features/{feature}/reports/`
@@ -211,7 +217,7 @@ Rules:
 
 After building the closeout packet, score the UPDATE PROCESS urgency:
 
-- Count: (a) total files touched, (b) any `.claude/`, `.codex/`, `README.md`, `AGENTS.md`, or `process/development-protocols/` changes, (c) session involved 3+ memory-worthy observations
+- Count: (a) total files touched, (b) any `.claude/`, `.codex/`, `.cursor/`, `README.md`, `AGENTS.md`, or `process/development-protocols/` changes, (c) session involved 3+ memory-worthy observations
 - LOW (0-1 signals): include "UPDATE PROCESS available if you want." in closeout
 - MEDIUM (2 signals): include "Recommend UPDATE PROCESS -- significant changes detected."
 - HIGH (3+ signals): include "Strongly recommend UPDATE PROCESS -- harness/protocol files touched."

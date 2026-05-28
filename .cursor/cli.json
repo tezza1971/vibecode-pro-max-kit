@@ -1,0 +1,29 @@
+{
+  "$schema": "https://cursor.com/schemas/cli.json",
+  "permissions": {
+    "allow": [
+      "Read(**/*)",
+      "Write(**/*)",
+      "Shell(git status)",
+      "Shell(git diff*)",
+      "Shell(git log*)",
+      "Shell(npm *)",
+      "Shell(pnpm *)",
+      "Shell(yarn *)",
+      "Shell(bun *)",
+      "Shell(node *)",
+      "Shell(curl *)"
+    ],
+    "deny": [
+      "Shell(git push --force*)",
+      "Shell(git reset --hard*)",
+      "Shell(rm -rf /*)",
+      "Shell(rm -rf ~/*)"
+    ]
+  },
+  "notes": {
+    "riper_execute_gate": "RIPER-5 EXECUTE mode requires explicit ENTER EXECUTE MODE — do not use --force/--yolo to bypass plan approval for substantial work.",
+    "user_override": "Project permissions merge with ~/.cursor/cli-config.json. Adjust there for personal defaults.",
+    "headless": "For CI: agent -p --mode=agent from repo root so .cursor/hooks.json and rules load."
+  }
+}

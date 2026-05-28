@@ -246,6 +246,10 @@ function resolveGlob() {
   const stripList = manifest.strip || [];
   const symlinkMap = manifest.symlinks || {};
 
+  const explicitIncludes = new Set(
+    includePatterns.filter((p) => !p.includes("*")).map((p) => p.replace(/^\.\//, "")),
+  );
+
   // 1. Resolve all include patterns
   const allFiles = resolveGlobPatterns(includePatterns);
 
@@ -254,7 +258,7 @@ function resolveGlob() {
 
   // 3. Split into managed files and kit-only files
   const managedFiles = filtered.filter(
-    (f) => !matchesPatternList(f, kitOnlyPatterns),
+    (f) => explicitIncludes.has(f) || !matchesPatternList(f, kitOnlyPatterns),
   );
   const kitOnlyFiles = resolveGlobPatterns(kitOnlyPatterns).filter(
     (f) => !matchesExclude(f, excludePatterns),

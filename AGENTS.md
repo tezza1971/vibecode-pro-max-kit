@@ -679,7 +679,9 @@ Cross-agent issues: Claude Code and Codex must use the same `process/` folder st
 
 - Agent Definitions: `.claude/agents/*.md`
 - Codex Agent Mirrors: `.codex/agents/*.toml`
-- Workflow Skills: real reusable skills under `.claude/skills/*/SKILL.md`, exposed to Codex through `.agents/skills/`
+- Cursor Agent Mirrors: `.cursor/agents/*.md`
+- Workflow Skills: real reusable skills under `.claude/skills/*/SKILL.md`, exposed to Codex through `.agents/skills/` and Cursor through `.cursor/skills/` (symlink)
+- Cursor setup guide: [docs/CURSOR.md](docs/CURSOR.md)
 - Plans: `process/general-plans/active/` (active general), `process/general-plans/{completed,backlog,reports,references}/` (general archives/supporting artifacts), `process/features/*/active/` (feature-scoped)
 - Features: `process/features/`
 - Context: `process/context/all-context.md` router plus relevant `process/context/` files/groups
@@ -687,12 +689,24 @@ Cross-agent issues: Claude Code and Codex must use the same `process/` folder st
 ## Porting Notes
 
 This file intentionally preserves the original `CLAUDE.md` workflow while adapting it
-to Codex-native constructs:
+to Codex-native and Cursor-native constructs:
 
-- `AGENTS.md` for top-level repository instructions
-- `.agents/skills/` for mode and command workflows
+- `AGENTS.md` for top-level repository instructions (Codex + Cursor)
+- `.agents/skills/` for Codex skill discovery (symlink to `.claude/skills/`)
+- `.cursor/skills/` for Cursor skill discovery (symlink to `.claude/skills/`)
 - `.codex/agents/` for Codex subagent role mirrors
+- `.cursor/agents/` for Cursor subagent role mirrors
 - `.codex/config.toml` for project-level Codex configuration
+- `.cursor/rules/` for always-on Cursor rule shards
+- `.cursor/hooks.json` for Cursor lifecycle hooks (CLI + IDE)
+
+### Cursor-specific notes
+
+- **Subagents:** Invoke RIPER-5 mode agents via Cursor's Task tool using definitions in `.cursor/agents/`. YAML `tools:` locks from Claude agents are **not** enforced — follow prompt boundaries strictly.
+- **Mode commands:** `ENTER RESEARCH MODE`, `ENTER INNOVATE MODE`, `ENTER PLAN MODE`, `ENTER EXECUTE MODE`, `ENTER UPDATE PROCESS MODE`, `ENTER FAST MODE`.
+- **Cursor Plan mode** (`/plan`, `--mode=plan`, CLI `--plan`) is **not** the same as the RIPER PLAN phase. Use plan artifacts' **Cursor Plan import block** for native Plan mode; use RIPER PLAN for durable specs under `process/`.
+- **Hooks:** `.cursor/hooks.json` adapts shared `.claude/hooks/` logic for Cursor JSON I/O. Do not rely only on third-party Claude hook bridging in IDE settings — use project `.cursor/hooks.json` for CLI parity.
+- **CLI:** Run `agent` from the repo root so rules, hooks, skills, and `AGENTS.md` load. See `.cursor/cli.json` for project permission defaults.
 
 The authoritative historical source remains:
 

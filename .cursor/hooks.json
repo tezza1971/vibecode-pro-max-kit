@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "hooks": {
+    "sessionStart": [
+      {
+        "command": "node .cursor/hooks/adapters/session-start.cjs"
+      }
+    ],
+    "preCompact": [
+      {
+        "command": "node .cursor/hooks/adapters/session-start.cjs"
+      }
+    ],
+    "subagentStart": [
+      {
+        "matcher": ".*",
+        "command": "node .cursor/hooks/adapters/subagent-start.cjs"
+      }
+    ],
+    "preToolUse": [
+      {
+        "matcher": "Write",
+        "command": "node .cursor/hooks/adapters/pre-tool-use.cjs descriptive-name"
+      },
+      {
+        "matcher": "Shell|Read|Write|Grep|Glob|Bash|Edit|Delete|Task|MCP:.*",
+        "command": "node .cursor/hooks/adapters/pre-tool-use.cjs scout-block"
+      },
+      {
+        "matcher": "Shell|Read|Write|Grep|Glob|Bash|Edit|Delete|Task|MCP:.*",
+        "command": "node .cursor/hooks/adapters/pre-tool-use.cjs privacy-block"
+      }
+    ],
+    "postToolUse": [
+      {
+        "matcher": "Write|Edit|TabWrite",
+        "command": "node .cursor/hooks/adapters/post-tool-use.cjs session-state"
+      },
+      {
+        "matcher": "Write|Edit|TabWrite",
+        "command": "node .cursor/hooks/adapters/post-tool-use.cjs post-edit-simplify-reminder"
+      }
+    ]
+  }
+}

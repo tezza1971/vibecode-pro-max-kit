@@ -1,0 +1,16 @@
+---
+description: Harness and process folder edit awareness
+globs: "**/{.claude,.codex,.cursor,process}/**"
+alwaysApply: false
+---
+
+# Harness file edits
+
+Changes under `.claude/`, `.codex/`, `.cursor/`, or `process/development-protocols/` affect the agent harness.
+
+When modifying these paths:
+
+- Keep Claude (`.claude/agents/`), Codex (`.codex/agents/`), and Cursor (`.cursor/agents/`) agent surfaces in parity.
+- Run `node .claude/skills/vc-audit-vc/scripts/validate-agent-parity.mjs` and Cursor validators after agent changes.
+- Regenerate Cursor agents with `node .claude/skills/vc-audit-vc/scripts/generate-cursor-agents.mjs --write` when Claude agent bodies change.
+- Prefer durable updates in `process/context/` over hardcoding project facts in root instruction files.
